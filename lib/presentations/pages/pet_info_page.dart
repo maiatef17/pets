@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/data/models/pet.dart';
 import 'package:pets_app/presentations/widgets/dialog.dart';
 
-class PetInfoPage extends StatelessWidget {
-  const PetInfoPage({Key? key, required this.pet}) : super(key: key);
+class PetInfoPage extends StatefulWidget {
+  const PetInfoPage({Key? key, required this.pet});
   final Pet pet;
+  @override
+  State<PetInfoPage> createState() => _PetInfoPageState();
+}
 
+class _PetInfoPageState extends State<PetInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: Text(
-          'ID # ${pet.id} ${pet.name}',
+          'ID # ${widget.pet.id} ${widget.pet.name}',
           style: const TextStyle(color: Colors.white),
         ),
       ),
@@ -23,7 +27,7 @@ class PetInfoPage extends StatelessWidget {
             ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(30)),
-                child: Image.asset('${pet.imageurl}',
+                child: Image.asset('${widget.pet.imageurl}',
                     height: 350,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover)),
@@ -33,14 +37,14 @@ class PetInfoPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ID: ${pet.id}',
+                    'ID: ${widget.pet.id}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         color: Colors.deepPurple),
                   ),
                   Text(
-                    'Name: ${pet.name}',
+                    'Name: ${widget.pet.name}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -65,7 +69,7 @@ class PetInfoPage extends StatelessWidget {
                       onPressed: () => showDialog(
                           context: context,
                           builder: (context) =>
-                              ConfirmAdoptionDialog(name: pet.name)),
+                              ConfirmAdoptionDialog(name: widget.pet.name)),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple),
                       child: const Text(
@@ -75,6 +79,40 @@ class PetInfoPage extends StatelessWidget {
                 ))
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            widget.pet.isFav = !widget.pet.isFav;
+          });
+
+          ScaffoldMessenger.of(context).clearSnackBars();
+          if (!widget.pet.isFav) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Removed from a favorite!"),
+                duration: Duration(seconds: 1),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Marked as a favorite!"),
+                duration: Duration(seconds: 1),
+              ),
+            );
+          }
+        },
+        child: widget.pet.isFav
+            ? Icon(
+                Icons.favorite,
+                color: Colors.white,
+              )
+            : Icon(
+                Icons.favorite_border,
+                color: Colors.white,
+              ),
+        backgroundColor: Colors.deepPurple,
       ),
     );
   }
