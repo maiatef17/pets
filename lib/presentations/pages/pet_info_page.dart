@@ -14,6 +14,7 @@ class _PetInfoPageState extends State<PetInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         foregroundColor: Colors.white,
         backgroundColor: Colors.deepPurple,
         title: Text(
           'ID # ${widget.pet.id} ${widget.pet.name}',

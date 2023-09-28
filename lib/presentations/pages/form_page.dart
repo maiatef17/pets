@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pets_app/presentations/pages/pets_page.dart';
 
+class FormData {
+  final String name;
+  final String email;
+  final String password;
+
+  FormData({required this.name, required this.email, required this.password});
+}
+
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
 
@@ -89,8 +97,15 @@ class _FormPageState extends State<FormPage> {
               ElevatedButton(
                 onPressed: () {
                   if (key.currentState!.validate()) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => petsPage()));
+                    
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => petsPage(
+                                      username: Name.text,
+                                      email: Email.text,
+                                      password: Password.text))
+                                      );
                   }
                 },
                 style: ElevatedButton.styleFrom(
