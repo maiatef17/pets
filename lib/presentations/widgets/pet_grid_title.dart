@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/data/models/pet.dart';
 import 'package:pets_app/presentations/pages/pet_info_page.dart';
 
-class petGridTitle extends StatelessWidget {
+class petGridTitle extends StatefulWidget {
   const petGridTitle({super.key, required this.pet});
   final Pet pet;
 
   @override
+  State<petGridTitle> createState() => _petGridTitleState();
+}
+
+class _petGridTitleState extends State<petGridTitle> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PetInfoPage(pet: pet)));
+      onTap: () async{
+       await Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PetInfoPage(pet: widget.pet)));
+            setState(() {
+              
+            });
+            
       },
       child: Container(
         width: 200,
@@ -23,7 +32,7 @@ class petGridTitle extends StatelessWidget {
                 height: 50,
                 color: Colors.deepPurple.withOpacity(0.5),
                 child: Text(
-                  '${pet.name}',
+                  widget.pet.name,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -31,7 +40,7 @@ class petGridTitle extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              child: Image.asset('${pet.imageurl}', fit: BoxFit.cover)),
+              child: Image.asset(widget.pet.imageurl, fit: BoxFit.cover)),
         ),
       ),
     );

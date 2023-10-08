@@ -3,14 +3,14 @@ import 'package:pets_app/data/data%20source/pet_local_data_source/pet_local_data
 import 'package:pets_app/data/models/pet.dart';
 import 'package:pets_app/presentations/widgets/pet_grid_title.dart';
 
-class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+class AdoptedPage extends StatefulWidget {
+  const AdoptedPage({Key? key}) : super(key: key);
 
   @override
-  State<FavoritesPage> createState() => _FavoritesPageState();
+  State<AdoptedPage> createState() => _AdoptedPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage> {
+class _AdoptedPageState extends State<AdoptedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,16 +26,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 return Text('Error: ${snapshot.error}');
               }
               List<Pet> pets = snapshot.data!;
-
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1, mainAxisSpacing: 16),
                 itemBuilder: (context, i) => petGridTitle(
                     pet: pets
-                        .where((element) => element.isFav == true)
+                        .where((element) => element.isAdopt == true)
                         .toList()[i]),
                 itemCount: pets
-                    .where((element) => element.isFav == true)
+                    .where((element) => element.isAdopt == true)
                     .toList()
                     .length,
               );

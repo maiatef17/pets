@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pets_app/data/data%20source/pet_local_data_source/pet_local_data_source.dart';
 import 'package:pets_app/data/models/pet.dart';
 import 'package:pets_app/presentations/widgets/dialog.dart';
 
@@ -10,11 +11,12 @@ class PetInfoPage extends StatefulWidget {
 }
 
 class _PetInfoPageState extends State<PetInfoPage> {
+  PetLocalDSImpl ds = PetLocalDSImpl();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         foregroundColor: Colors.white,
+        foregroundColor: Colors.white,
         backgroundColor: Colors.deepPurple,
         title: Text(
           'ID # ${widget.pet.id} ${widget.pet.name}',
@@ -28,7 +30,7 @@ class _PetInfoPageState extends State<PetInfoPage> {
             ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(30)),
-                child: Image.asset('${widget.pet.imageurl}',
+                child: Image.asset(widget.pet.imageurl,
                     height: 350,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover)),
@@ -51,13 +53,14 @@ class _PetInfoPageState extends State<PetInfoPage> {
                         fontSize: 20,
                         color: Colors.deepPurple),
                   ),
-                  SizedBox(height: 8),
-                  Text('TIPS:'),
-                  Text('Spend Time With Them Before You Bring Them Home.'),
-                  Text('Set Up a Space Just For Them.'),
-                  Text('Pet Proof Your Home.'),
-                  Text('Plan to Introduce Them to Other Pets.'),
-                  Text('Find a Good Trainer.')
+                  const SizedBox(height: 8),
+                  const Text('TIPS:'),
+                  const Text(
+                      'Spend Time With Them Before You Bring Them Home.'),
+                  const Text('Set Up a Space Just For Them.'),
+                  const Text('Pet Proof Your Home.'),
+                  const Text('Plan to Introduce Them to Other Pets.'),
+                  const Text('Find a Good Trainer.')
                 ],
               ),
             ),
@@ -69,8 +72,10 @@ class _PetInfoPageState extends State<PetInfoPage> {
                   child: ElevatedButton(
                       onPressed: () => showDialog(
                           context: context,
-                          builder: (context) =>
-                              ConfirmAdoptionDialog(name: widget.pet.name)),
+                          builder: (context) => ConfirmAdoptionDialog(
+                                name: widget.pet.name,
+                                pet: widget.pet,
+                              )),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple),
                       child: const Text(
@@ -82,8 +87,9 @@ class _PetInfoPageState extends State<PetInfoPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           setState(() {
+            PetLocalDSImpl().togglePetFavorite(widget.pet.id.toString());
             widget.pet.isFav = !widget.pet.isFav;
           });
 

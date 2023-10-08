@@ -11,8 +11,8 @@ class AdoptionSucceeded extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.network(
-            'https://quilted.io/cdn/shop/products/PetAdoptionIcon_1.png?v=1652144492',
+          Image.asset(
+            'assets/images/21.webp',
             width: 200,
             height: 200,
           ),
