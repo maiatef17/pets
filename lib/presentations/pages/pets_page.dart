@@ -54,6 +54,15 @@ class _PetsPageState extends State<PetsPage> {
               Image.asset(
                 'assets/images/21.webp',
               ),
+              const Text(
+                'Pets App',
+                style: TextStyle(
+                    fontFamily: 'Cookie',
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
               ElevatedButton(
                 onPressed: () {
                   UserLocalDSImpl().logOut();
